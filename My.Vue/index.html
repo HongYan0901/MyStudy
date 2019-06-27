@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+  <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<!--<editor-fold desc="Description">-->
+<div id="app">
+  {{ message }}
+</div>
+
+<div id="app-1">
+  <span v-bind:title="nowDate">
+    鼠标悬停查看信息
+  </span>
+</div>
+
+<div id="app-3">
+  <p v-if="seen">现在你看见哦了</p>
+</div>
+
+<div id="app-4">
+  <ol>
+    <li v-for="todo in todos">
+      {{todo.text}}
+    </li>
+  </ol>
+</div>
+
+<div id="app-5">
+  <p>
+    {{messageM}}
+  </p>
+  <button v-on:click="reverseMessage">逆转消息</button>
+</div>
+
+<div id="app-6">
+  <p>{{ app6 }}</p>
+  <input v-model="app6">
+</div>
+
+<div id="app-7">
+  <ol>
+    <li>这是一个正常的</li>
+  </ol>
+  <ol>
+    <todo-ite></todo-ite>
+  </ol>
+  <ol>
+    <li>-------------升级后的自定义控件-----------------</li>
+  </ol>
+  <ol>
+    <!--todo对象绑定于item便利层的数据-->
+    <!--key绑定于id,不进行绑定也没有关系，只要不用到这个数据，也会正常显示text的数据-->
+    <!--for便利item-->
+    <todo-item v-for="item in groceryList" v-bind:todo="item"  v-bind:key="item.id"  >
+
+    </todo-item>
+  </ol>
+  <ol>
+    <li>---------------上面的自定义等价于下面的---------------------</li>
+  </ol>
+  <ol><!--注意：这里是用的li不是自定义控件-->
+    <li        v-for="item in groceryList"  v-bind:todo="item"  v-bind:key="item.id">
+          {{item.text}}
+    </li>
+  </ol>
+  <ol>
+    <li>-------------------这样也是可以的-----------------</li><!--很像我们用的js fro循环-->
+  </ol>
+
+  <ol>
+    <li  v-for="item in groceryList" >
+      {{item.text}}
+    </li>
+  </ol>
+
+</div>
+
+<!--</editor-fold>-->
+
+
+
+</body>
+</html>
+<script>
+  //region自定义控件    PS 自定义控件必须先执行，！！！！！！！！！！不然你啥也么有
+
+  Vue.component('todo-ite',{
+    template:'<li>这是一个自定义的li</li>'
+  })
+
+  //自定义控件升级
+  Vue.component('todo-item',{
+    props:['todo'],//对象
+    template:'<li>{{todo.text}}</li>'
+  })
+
+  //endregion
+
+  //region 实践代码
+  var app = new Vue({
+    el: '#app',
+    data: {
+      message: 'Hello Vue!'
+    }
+  });
+  app.message="哈哈哈哈哈哈哈"
+
+  var app2=new Vue({
+    el:'#app-1',
+    data: {
+      nowDate:'页面加载于'+new Date().toLocaleString()
+    }
+  })
+  app2.nowDate='现在是北京时间'
+
+  var  app3=new Vue({
+    el :'#app-3',
+    data:{
+      seen:true
+    }
+  })
+  app3.seen=false
+
+  var app4=new Vue({
+    el:'#app-4',
+    data:{
+      todos:[
+        {text:'1'},{text: '2'},{text:'3'}
+      ]
+    }
+  })
+  app4.todos.push({text:'4'})
+
+  var app5 =new Vue({
+    el:'#app-5',
+    data:{
+      messageM:'hello Vue.js!'
+    },
+    methods:{
+      reverseMessage:function () {
+        this.messageM=this.messageM.split('').reverse().join('')
+      }
+    }
+  })
+
+  var app_6 = new Vue({
+    el: '#app-6',
+    data: {
+      app6: 'Hello Vue!'
+    }
+  })
+
+  var app_7=new Vue({
+    el:'#app-7',
+    data:{
+      groceryList:[
+        {id:0,text:'蔬菜'},
+        {id:1,text:'奶酪'},
+        {id:2,text:'随便'},
+      ]
+    }
+  })
+  //endregion
+
+
+
+
+
+</script>
+

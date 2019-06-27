@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+  <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml"  xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Title2</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="vm" >
+  {{a}}
+</div>
+<div id="vl" >
+  {{a}}
+</div>
+</body>
+</html>
+
+<script>
+
+  var data={ a:1 }
+  //这里唯一的例外是使用 Object.freeze()，
+  // 这会阻止修改现有的属性，
+  // 也意味着响应系统无法再追踪变化。
+  //  Object.freeze(data1)
+   var vm=new Vue({
+    el:'#vm',
+    data:data
+  })
+  vm.a=2
+  vm.$data===data
+
+</script>
